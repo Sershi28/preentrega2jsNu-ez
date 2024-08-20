@@ -9,14 +9,17 @@
 <body>
     <h1>Bienvenidos a Piedra, Papel o Tijera</h1>
     <div id="opciones">
-        <button onclick="jugar('piedra')">Piedra</button>
-        <button onclick="jugar('papel')">Papel</button>
-        <button onclick="jugar('tijera')">Tijera</button>
+        <button id="btn-piedra">Piedra</button>
+        <button id="btn-papel">Papel</button>
+        <button id="btn-tijera">Tijera</button>
+        <button id="btn-reset">Resetear puntaje</button>
     </div>
     <div id="resultado"></div>
     <div id="marcador">
         <p>Jugador: <span id="marcador-jugador">0</span></p>
         <p>Maquina: <span id="marcador-computadora">0</span></p>
+        <p>Partidas ganadas: <span id="partidas-ganadas">0</span></p>
+        <p>Puntaje: <span id="puntaje">0</span></p>
     </div>
 
     <script src="./js/main.js"></script>
