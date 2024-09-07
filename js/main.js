@@ -40,12 +40,22 @@ function determinarGanador(jugador, computadora) {
             guardarPuntaje();
             cargarPuntaje();
             marcador.partidasGanadas++;
+            Swal.fire({
+                icon: 'success',
+                title: '¡Felicidades!',
+                text: '¡Has ganado la partida y sumaste 100 puntos!',
+            });
             reiniciarPartida();
         }
         return 'Ganaste';
     } else {
         marcador.computadora++;
         if (marcador.computadora === 3) {
+            Swal.fire({
+                icon: 'error',
+                title: '¡Lo siento!',
+                text: 'La computadora ganó la partida. ¡Inténtalo de nuevo!',
+            });
             reiniciarPartida();
         }
         return 'Perdiste';
@@ -64,21 +74,38 @@ function actualizarMarcador() {
     document.getElementById('partidas-ganadas').textContent = marcador.partidasGanadas;
 }
 
+function mostrarImagen(eleccion, jugador) {
+    const rutaImagen = `./assets/${eleccion}.png`;
+    const imgElement = document.getElementById(jugador === 'jugador' ? 'img-jugador' : 'img-computadora');
+    imgElement.src = rutaImagen;
+    imgElement.style.display = 'block'; 
+}
+
 function jugar(opcionJugador) {
     const opcionComp = opcionComputadora();
     const resultado = determinarGanador(opcionJugador, opcionComp);
     
-    document.getElementById('resultado').textContent = 
-    "Elegiste: " + opcionJugador + ". " + 
-    "Computadora eligió: " + opcionComp + ". " + 
-    resultado + "!";
+   
+    mostrarImagen(opcionJugador, 'jugador');
+    mostrarImagen(opcionComp, 'computadora');
+
+    Swal.fire({
+        title: 'Resultado',
+        html: `Elegiste: <strong>${opcionJugador}</strong><br>Computadora eligió: <strong>${opcionComp}</strong><br><strong>${resultado}!</strong>`,
+        icon: resultado === 'Ganaste' ? 'success' : resultado === 'Perdiste' ? 'error' : 'info',
+    });
     
     actualizarMarcador();
 }
 
-function resetMarcador(){
+function resetMarcador() {
     localStorage.setItem('puntaje', 0);
     cargarPuntaje();
+    Swal.fire({
+        icon: 'warning',
+        title: 'Puntaje reiniciado',
+        text: 'El puntaje ha sido reiniciado a 0.',
+    });
 }
 
 class Juego {
@@ -95,4 +122,4 @@ class Juego {
     }
 }
 
-    const juego = new Juego();
+const juego = new Juego();
